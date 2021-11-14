@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenve = require("dotenv");
+const userRoute = require("./routes/user");
 
 dotenve.config();
 
@@ -17,6 +18,10 @@ conSuccess.once("open", (_) => {
 conSuccess.on("error", (err) => {
 	console.error("Database connection error: ", err);
 });
+
+app.use(express.json());
+
+app.use("/api/users", userRoute);
 
 const port = process.env.PORT || 5000;
 
