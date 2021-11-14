@@ -3,12 +3,13 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenve = require("dotenv");
 const userRoute = require("./routes/user");
+const authRoute = require("./routes/auth");
 
 dotenve.config();
 
 const db = process.env.MONGO_URL;
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(db);
 
 const conSuccess = mongoose.connection;
 conSuccess.once("open", (_) => {
@@ -21,6 +22,7 @@ conSuccess.on("error", (err) => {
 
 app.use(express.json());
 
+app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
 const port = process.env.PORT || 5000;
