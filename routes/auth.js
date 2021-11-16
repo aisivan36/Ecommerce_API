@@ -17,18 +17,18 @@ router.post("/register", async (req, res) => {
 	try {
 		const savedUser = await newUser.save();
 		res.status(201).json(savedUser);
-	} catch (err) {
-		res.status(500).json(err);
+	} catch (error) {
+		res.status(500).json(error);
 	}
 });
 
 //LOGIN
-
 router.post("/login", async (req, res) => {
 	try {
 		const user = await User.findOne({
-			userName: req.body.user_name,
+			username: req.body.username,
 		});
+		// console.log(user);
 
 		!user && res.status(401).json("Wrong User Name");
 
@@ -58,5 +58,4 @@ router.post("/login", async (req, res) => {
 		res.status(500).json(err);
 	}
 });
-
 module.exports = router;
